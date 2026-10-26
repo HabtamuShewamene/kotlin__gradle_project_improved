@@ -1,134 +1,105 @@
-# Library Management System - Kotlin Exercise
+﻿# Library Management System - Improved Edition (Weekend Challenge Task 2)
 
-##  Project Overview
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.0%2B-blue.svg)](https://kotlinlang.org)
+[![Gradle](https://img.shields.io/badge/Gradle-9.3.1-brightgreen.svg)](https://gradle.org)
+[![Build Status](https://img.shields.io/badge/Tests-Passing-success.svg)]()
 
-This project is a simple **Library Management System** implemented in Kotlin. It serves as a hands-on exercise to practice Kotlin fundamentals and Gradle build tool basics. The code is intentionally incomplete - your task is to complete the implementation by following the application behavior.
-
----
-
-##  Learning Objectives
-
-- Understand **Gradle** as a build tool (essential for Android development)
-- Practice **Kotlin** core language concepts
-- Navigate and complete an existing codebase
-- Build and run executable JAR files
+> **Course**: Mobile Application Development / Kotlin Fundamentals  
+> **Student**: Habtamu Shewamene Haile ([@HabtamuShewamene](https://github.com/HabtamuShewamene))  
+> **Original Base Project**: [Debre-birhan-university/kotlin__gradle_project](https://github.com/Debre-birhan-university/kotlin__gradle_project)  
+> **Selected Student Fork**: [awokedersie/kotlin__gradle_project](https://github.com/awokedersie/kotlin__gradle_project) by Awoke Derssie  
+> **Challenge Specification Credit**: Anthropic, Claude AI (2026) for prompt write-up  
 
 ---
 
-##  Prerequisites & Setup
+## 📖 1. Project Purpose & Objectives
 
-### 1. **Learn Gradle Basics**
-Gradle is the build tool we'll use throughout Android development. Complete the beginner tutorial:
-- [Gradle Getting Started Guide](https://docs.gradle.org/current/userguide/part1_gradle_init.html)
+This project is an enhanced **Library Management System** implemented in Kotlin and built using Gradle. As part of **Task 2 of the Weekend Challenge ("Build, Compare, and Improve a Project")**, this repository takes the previous student solution created by **Awoke Derssie ([@awokedersie](https://github.com/awokedersie))**, analyzes its design decisions, resolves critical limitations, and implements significant architectural and functional improvements.
 
-> ⚠️ **Note**: Download the latest Gradle version and practice in a separate project before returning to this one.
-
-### 2. **Master Kotlin Fundamentals**
-Choose your learning path:
-
-**Option A - Google's Android Pathway (Recommended for beginners):**
-- [Android Basics in Kotlin - Unit 1](https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1)
-
-**Option B - Official Kotlin Documentation:**
-- [Kotlin Getting Started Guide](https://kotlinlang.org/docs/getting-started.html)
-
-**Minimum Requirements:** Understand concepts covered in class + Chapter 3 materials.
+### Core Objectives:
+* Master Kotlin object-oriented patterns (data classes, interfaces, companion objects, extension functions).
+* Understand Gradle toolchains and multi-project build lifecycles.
+* Practice rigorous software engineering: code evaluation, regression testing, input sanitization, and metric analysis.
 
 ---
 
+## 🛠️ 2. Original Features vs. Implemented Improvements
 
-
-## 🎮 Your Task
-
-### **Primary Goal**
-Complete the missing implementation by:
-
-1. **Run the provided JAR** to see how the application should behave:
-   ```bash
-   java -jar app.jar
-   ```
-   Observe all features and workflows.
-
-2. **Navigate to the entry point**: `ConsoleApp.kt`
-
-3. **Fill in all the blanks** (`TODO` sections) to make your code produce the same behavior as the runnable JAR.
+| Feature Area | Original Solution (`awokedersie`) | Improved Edition (`HabtamuShewamene`) |
+| :--- | :--- | :--- |
+| **Borrow Limit** | Hardcoded to **3 books** (`size >= 3`) | Corrected to **5 books** (`MAX_BORROW_LIMIT = 5`) matching the official course specification |
+| **Input Validation** | None (empty strings and negative years accepted) | Strict input validation on ISBN, title, author, patron ID, and publication years |
+| **Patron View** | Basic listing | Enriched output displaying total count and comma-separated borrowed book lists |
+| **Search Function** | Simple case-insensitive match | Trimmed whitespace handling, structured numbered results, and catalog index tracking |
+| **Library Health** | None | Added **Option 8: Library Health & Analytics** (utilization rate, active borrowers count, book status breakdown) |
+| **Error Feedback** | Generic error messages | Contextual error diagnostics with actionable guidance |
+| **Testing** | 0 unit tests | Automated JUnit 5 test suite verifying validation, limits, returns, and analytics |
 
 ---
 
-## 🚀 How to Build & Run
+## 🚀 3. How Improvements Benefit Users
 
-### **Build the Project**
+1. **Policy Compliance**: Restoring the borrowing limit to 5 books allows patrons full access according to the library's official guidelines.
+2. **Data Integrity**: Input sanitization prevents corrupted or blank records from polluting the in-memory catalog.
+3. **Operational Visibility**: The new **Library Analytics** feature gives administrators real-time insights into inventory turnover and utilization.
+4. **Error Transparency**: Clear error feedback prevents user confusion when borrowing limits or missing items occur.
+
+---
+
+## 💻 4. Setup & Execution Instructions
+
+### Prerequisites
+* Java Development Kit (JDK 21 or higher)
+* Gradle wrapper (included in repository)
+
+### Build the Project
 ```bash
-# Clean and build
-./gradlew clean build
+# Build and run automated tests
+./gradlew build
 
-# Create runnable JAR
-./gradlew jar
-
-# Create distribution package
-./gradlew distZip
+# Run unit tests specifically
+./gradlew test
 ```
 
-### **Run the Application**
+### Run the Application
 ```bash
-# Option 1: Run directly with Gradle
+# Option 1: Run directly via Gradle
 ./gradlew run
 
-# Option 2: Run the JAR file
-java -jar build/libs/app.jar
-
-# Option 3: Run from distribution
-./gradlew distZip
-cd build/distributions/
-unzip app.zip
-cd app/bin
-./app  # (or app.bat on Windows)
+# Option 2: Execute compiled JAR
+java -jar app/build/libs/app.jar
 ```
 
 ---
 
-## ✅ Expected Features (What the completed app should do)
+## 🖥️ 5. Sample Console Execution
 
-When complete, the application should:
-
-- 📖 **Add books** to the library (ISBN, title, author, year)
-- 👤 **Register patrons** (ID, name, email, phone)
-- 📤 **Borrow books** (with availability and limit checks)
-- 📥 **Return books**
-- 🔍 **Search books** by title or author
-- 📋 **List all books** (available/borrowed status)
-- 👥 **View all patrons** and their borrowed books
-
----
-
-## 📝 Implementation Notes
-
-- The code follows a layered architecture:
-  - `model/` - Data classes (already complete)
-  - `repository/` - Data access interface (to be implemented)
-  - `service/` - Business logic (to be completed)
-  - `ui/` - Console interface (already complete)
-
-- Focus on implementing the missing parts in:
-  - `InMemoryRepository.kt`
-  - `DefaultLibraryService.kt`
-
-- Use the runnable JAR as your **specification** - match its behavior exactly
+```text
+================ LIBRARY MENU [Improved Edition] ================
+ 1 | Add Book
+ 2 | Register Patron
+ 3 | Borrow Book
+ 4 | Return Book
+ 5 | Search
+ 6 | List All Books
+ 7 | View All Patrons
+ 8 | Library Statistics & Health
+ 0 | Exit
+==============================================
+ Enter option: 8
+--- 📊 Library Health & Analytics ---
+ Total Catalog Books:   3
+ Available Books:       2
+ Currently Borrowed:    1
+ Total Registered Users:1
+ Active Borrowers:      1
+ Utilization Rate:      33.3%
+---------------------------------------
+```
 
 ---
 
-## 🆘 Getting Help
-
-If stuck:
-1. Review the Kotlin learning materials
-2. Check Gradle documentation
-3. Run the provided JAR to understand expected behavior
-4. Ask questions in group
-
-
----
-# submission instruction
-
-- Fork the Repository
-- Clone and Work on the Code
-- Commit Your Changes and Push to Your Fork
+## 📜 Academic Integrity & Attribution
+* **Base Upstream Project**: [Debre-birhan-university/kotlin__gradle_project](https://github.com/Debre-birhan-university/kotlin__gradle_project)
+* **Analyzed Student Fork**: [awokedersie/kotlin__gradle_project](https://github.com/awokedersie/kotlin__gradle_project)
+* **Challenge Write-Up Credit**: Anthropic, Claude AI (2026)
